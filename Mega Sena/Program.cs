@@ -1,14 +1,14 @@
 ﻿//3. Faça um programa que sorteie os seis números da mega sena e grave-os em um vetor ordenado; Imprima depois;
 
-int size = 6, auxiliar, auxiliar_vetor_3;
-int[] vetor_original = new int[size];
-int[] segundo_vetor = new int[size];
-int[] verificacao_vetor_repetido = new int[size];
+int size = 6, auxiliar;
+int[] vetor_sorteado = new int[size];
+int[] copia_sorteado = new int[size];
+int[] vetor_sorteado_repetido = new int[size];
 bool vetor_nao_copiado = false;
 
 for (int i = 0; i < size; i++)
 {
-    vetor_original[i] = new Random().Next(0, 100);
+    vetor_sorteado[i] = new Random().Next(1, 61);
 
     do
     {
@@ -16,44 +16,45 @@ for (int i = 0; i < size; i++)
         {
             for (int comparacao = referencia + 1; comparacao < size; comparacao++)
             {
-                if (vetor_original[referencia] == vetor_original[comparacao])
+                if (vetor_sorteado[referencia] == vetor_sorteado[comparacao])
                 {
-                    verificacao_vetor_repetido[i] = vetor_original[i];
-                    vetor_original[i] = new Random().Next(0, 10);
-
-                    for (int s = 0; s < size; s++)
-                    {
-                        if (vetor_original[s] == verificacao_vetor_repetido[s])
-                        {
-                            vetor_original[s] = new Random().Next(0, 10);
-                        }
-                        else
-                            vetor_nao_copiado = true;
-                    }
+                    vetor_sorteado_repetido[i] = vetor_sorteado[i];
+                    vetor_sorteado[i] = new Random().Next(1, 61);
                 }
+                else
+                    vetor_nao_copiado = true;
             }
         }
-
     } while (vetor_nao_copiado != true);
 
-    segundo_vetor[i] = vetor_original[i];
+    copia_sorteado[i] = vetor_sorteado[i];
+
+} while (vetor_nao_copiado != true) ;
+
+Console.WriteLine("Números sorteados, sem ordenação: ");
+for (int x = 0; x < size; x++)
+{
+    Console.Write(copia_sorteado[x] + " ");
 }
 
 for (int referencia_2 = 0; referencia_2 < size; referencia_2++)
 {
     for (int comparacao_2 = referencia_2 + 1; comparacao_2 < size; comparacao_2++)
     {
-        if (segundo_vetor[referencia_2] > segundo_vetor[comparacao_2])
+        for (int vetor_repetido = referencia_2 + 1; vetor_repetido < size; vetor_repetido++)
         {
-            auxiliar = segundo_vetor[referencia_2];
-            segundo_vetor[referencia_2] = segundo_vetor[comparacao_2];
-            segundo_vetor[comparacao_2] = auxiliar;
+            if (copia_sorteado[referencia_2] > copia_sorteado[comparacao_2])
+            {
+                auxiliar = copia_sorteado[referencia_2];
+                copia_sorteado[referencia_2] = copia_sorteado[comparacao_2];
+                copia_sorteado[comparacao_2] = auxiliar;
+            }
         }
     }
 }
 
-Console.WriteLine("Números sorteados: ");
+Console.WriteLine("\nNúmeros sorteados em ordem crescente: ");
 for (int x = 0; x < size; x++)
 {
-    Console.Write(segundo_vetor[x] + " ");
+    Console.Write(copia_sorteado[x] + " ");
 }
